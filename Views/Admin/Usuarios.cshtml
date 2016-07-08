@@ -1,0 +1,81 @@
+@{
+    ViewData["Title"] = "Usuarios";
+}
+@section scripts {
+<script type="text/template" id="templateListaUsuarios">              
+    <table class="table table-bordered">
+    <thead>
+        <tr>
+        <th>Username</th>
+        <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{#each this}}  
+            <tr>                    
+            <td>{{username}}</td>
+            <td><button type="button" id="btnVer{{id}}"
+                data-id-ver="{{id}}" class="btn btn-default">Ver</button>
+            <button type="button" data-toggle="modal" data-target="#modalDelete" id="btnEliminar{{id}}"
+                data-id-eliminar="{{id}}" class="btn btn-danger">Eliminar</button>
+            </td>
+            </tr>
+    {{else}}
+        <tr>
+            <td>No hay usuarios registrados.</td>
+            <td></td>
+            <td></td>
+        </tr>
+    {{/each}}
+    </tbody>
+    </table>
+        
+</script>
+<script src="/js/usuarios.js"></script>	
+}       
+<div class="container">
+    <h3>Lista de usuarios</h3>
+
+    <div class="alert alert-danger" id="mensajeError">
+    <span id="error">error</span>
+    <button id="btnCloseErr" class="btn btn-danger" onclick="$('#mensajeError').hide();">
+    <span class="glyphicon glyphicon-remove"></span> Ok
+    </button>
+    </div>           
+
+    <div class="alert alert-success" id="mensajeOk">
+    <span id="mensaje">mensaje</span>
+    <button id="btnCloseMensaje" class="btn btn-success" onclick="$('#mensajeOk').hide();">
+    <span class="glyphicon glyphicon-ok"></span> Ok
+    </button>
+    </div>  
+
+    <button type="button" id="btnNuevo" class="btn btn-primary">Nuevo usuario</button>
+    <div class="panel panel-default espacio-arriba">
+        <div class="panel-body">
+            <div id="listaUsuarios"></div>
+        </div>
+    </div>
+    
+    <!-- ventana modal -->
+    <div id="modalDelete" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Confirmar eliminación</h4>
+                </div>
+                <div class="modal-body">
+                    <p>¿Realmente desea eliminar el usuario?</p>
+                </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="btnConfEliminar">Si</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>  

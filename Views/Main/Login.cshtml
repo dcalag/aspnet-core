@@ -1,0 +1,52 @@
+@{
+    Layout = null;
+ }
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - aspnet_core</title>
+
+    <environment names="Development,Staging,Production">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />        
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+
+    <environment names="Development,Staging,Production">
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="~/lib/handlebars/handlebars.min.js"></script>        
+        <script src="~/js/login.js"></script>
+    </environment>    
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <span class="navbar-brand">Login</span>      
+            </div>   
+        </div>
+    </nav>
+    <div class="container">                                             
+        <form>            
+            <h2>Login:</h2> 
+            <div class="alert alert-danger" id="mensajeError" style="margin-top:10px">
+                <span id="error"></span>
+                <button type="button" id="btnCloseErr" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-remove"></span> Ok
+                </button>
+            </div>   
+            <div class="form-group">
+                <label for="username">Usuario:</label>        
+                <input type="text"  
+                       id="username" class="form-control" name="username"/>     
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input type="password" 
+                       id="password" class="form-control" name="password"/>            
+            </div>
+            <button id="btnLogin" class="btn btn-success" type="button">Login</button>
+        </form>
+    </div>
+</body>
