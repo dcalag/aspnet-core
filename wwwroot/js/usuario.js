@@ -13,20 +13,14 @@ var ViewDatosUsuario = Backbone.View.extend({
     },
     guardarUsuario: function () {
         usuario.cargarDatos();
-        console.debug(usuario.toJSON());
         usuario.save(null, {
             contentType: 'application/json',
             dataType: 'text',
-            success: function (model, response) {
-                var responseObj = $.parseJSON(response);
-                if (responseObj.error !== '')
-                    error(responseObj.error);
-                else
-                    mensaje("Registro guardado correctamente.");
+            success: function () {
+                mensaje("Usuario guardado correctamente.");
             },
-            error: function (model, response) {
-                var responseObj = $.parseJSON(response.responseText);
-                error('Error al guardar el registro: ' + responseObj.error);
+            error: function () {
+                error('Error al guardar el usuario.');
             }
         }
         );
@@ -85,9 +79,7 @@ var Usuario = Backbone.Model.extend({
     urlRoot: '/AdminApi/Usuario'
 });
 
-$(document).ready(function () {
-    $('#mensajeOk').hide();
-    $('#mensajeError').hide();        
+$(document).ready(function () {       
 
     var verId = getUriParameter('id');
     usuario = new Usuario();
@@ -97,6 +89,9 @@ $(document).ready(function () {
         usuario.set('id', verId);
         usuario.fetch({
             success: function () {
+                //function (model,response)
+                //var responseObj = $.parseJSON(response);
+                //console.debug(responseObj.error);
                 usuario.calculateRoles();
 
                 vista = new ViewDatosUsuario({
@@ -121,13 +116,3 @@ $(document).ready(function () {
         $('#username').focus();
     }
 });
-
-function mensaje(mensaje) {
-    $('#mensajeOk').show();
-    $('#mensaje').html(mensaje);
-}
-
-function error(mensaje) {
-    $('#mensajeError').show();
-    $('#error').html(mensaje);
-}

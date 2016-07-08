@@ -9,3 +9,18 @@ function getUriParameter(theParameter) {
   }
   return false;
 }
+
+$(document).ready(function () {
+    //$('#mensajeOk').hide();
+    //$('#mensajeError').hide(); 
+});
+
+function mensaje(mensaje) {
+    $('#mensajeOk').show();
+    $('#mensaje').html(mensaje);
+}
+
+function error(mensaje) {
+    $('#mensajeError').show();
+    $('#error').html(mensaje);
+}

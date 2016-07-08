@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 
 namespace DcaLag.AspNet
 {
@@ -28,6 +29,7 @@ namespace DcaLag.AspNet
         {
             services.Configure<SqlSettings>(Configuration.GetSection("SqlSettings"));        
             services.AddTransient<IUsuarioDao, UsuarioDaoPg>();
+            services.AddTransient<ILogger, ConsoleLogger>();
 
             // Add framework services.
             services.AddMvc();
@@ -35,10 +37,11 @@ namespace DcaLag.AspNet
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-        {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+        {            
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));            
             loggerFactory.AddDebug();
 
+            /*
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -48,6 +51,7 @@ namespace DcaLag.AspNet
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            */       
 
             app.UseStaticFiles();
 

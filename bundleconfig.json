@@ -6,9 +6,9 @@
     ]
   },
   {
-    "outputFileName": "wwwroot/js/login.min.js",
+    "outputFileName": "wwwroot/js/site.min.js",
     "inputFiles": [
-      "wwwroot/js/login.js"
+      "wwwroot/js/site.js"
     ],
     "minify": {
       "enabled": true,

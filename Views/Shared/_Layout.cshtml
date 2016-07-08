@@ -16,7 +16,7 @@
         <script src="~/lib/handlebars/handlebars.min.js"></script>
         <script src="~/lib/underscore/underscore-min.js"></script>
         <script src="~/lib/backbone/backbone-min.js"></script>
-        <script src="~/js/site.js"></script>
+        <script src="~/js/site.min.js"></script>
     </environment>
 
     @RenderSection("scripts", required: false)
@@ -48,6 +48,20 @@
     </nav>
 
     <div class="container">
+        <div class="alert alert-danger" id="mensajeError" style="display:none">
+        <span id="error">error</span>
+        <button id="btnCloseErr" class="btn btn-danger" onclick="$('#mensajeError').hide();">
+        <span class="glyphicon glyphicon-remove"></span> Ok
+        </button>
+        </div>           
+
+        <div class="alert alert-success" id="mensajeOk" style="display:none">
+        <span id="mensaje">mensaje</span>
+        <button id="btnCloseMensaje" class="btn btn-success" onclick="$('#mensajeOk').hide();">
+        <span class="glyphicon glyphicon-ok"></span> Ok
+        </button>
+        </div>  
+
         @RenderBody()
         <hr />
         <footer>

@@ -25,12 +25,11 @@ var ViewLista = Backbone.View.extend({
         modDel.destroy({
             contentType: 'application/json',
             dataType: 'text',
-            success: function (model, response) {
+            success: function () {
                 mensaje("Registro eliminado correctamente.");
             },
-            error: function (model, response) {
-                var responseObj = $.parseJSON(response.responseText);
-                error('Error al eliminar el registro: ' + responseObj.error);
+            error: function () {
+                error('Error al eliminar el usuario.');
             }
         });
         vista.render();
@@ -49,8 +48,6 @@ var UsuariosCollection = Backbone.Collection.extend({
 });
 
 $(document).ready(function () {
-    $('#mensajeOk').hide();
-    $('#mensajeError').hide();
     
     $('#btnConfEliminar').click( function() {
        vista.eliminar(); 
@@ -69,17 +66,7 @@ $(document).ready(function () {
             vista.render();
         },
         error: function () {
-            error('Error al obtener la lista de usuarios.');
+            error('Error al obtener la lista de usuarios');
         }
     });
 });
-
-function mensaje(mensaje) {
-    $('#mensajeOk').show();
-    $('#mensaje').html(mensaje);
-}
-
-function error(mensaje) {
-    $('#mensajeError').show();
-    $('#error').html(mensaje);
-}

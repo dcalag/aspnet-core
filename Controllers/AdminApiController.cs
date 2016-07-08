@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using DcaLag.AspNet.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace DcaLag.AspNet.Controllers{
+    
     [Authorize (Roles ="ROLE_ADMIN")]
     public class AdminApiController{
 
         private IUsuarioDao FUsuarioDao;
         private SqlSettings FSqlSettings;
+        private ILogger<AdminApiController> FLogger;
          
-        public AdminApiController(IUsuarioDao AUsuarioDao,
+        public AdminApiController(IUsuarioDao AUsuarioDao, ILogger<AdminApiController> ALogger,
             IOptions<SqlSettings> ASettings){
             FUsuarioDao = AUsuarioDao;
+            FLogger = ALogger;
             FSqlSettings = ASettings.Value;
             FUsuarioDao.ConnectionString = FSqlSettings.ConnectionString;
         }
@@ -22,65 +26,35 @@ namespace DcaLag.AspNet.Controllers{
         [HttpGet]
         [Route("AdminApi/Usuarios")]
         public List<Usuario> UsuariosGet() {
+            // FLogger.LogError("error!");                      
             return FUsuarioDao.RecuperarTodos();
         }
 
         [HttpGet]
         [Route("AdminApi/Usuario/{userId}")]
         public Usuario UsuarioGet(string userId){
-            var lModel = new Usuario();
-            try{
-                lModel = FUsuarioDao.Recuperar(Int32.Parse(userId));
-            }
-            catch (Exception ex){
-                lModel.Error = ex.Message;
-            }
+            var lModel =
+                FUsuarioDao.Recuperar(Int32.Parse(userId));
             return lModel;
         }
 
         [HttpDelete]
         [Route("AdminApi/Usuario/{userId}")]
-        public BaseModel UsuarioDelete(string userId){
-            var lModel = new BaseModel();
-            try{
-                FUsuarioDao.Eliminar(int.Parse(userId));
-            }
-            catch (Exception ex){
-                lModel.Error = ex.Message;
-            }
-            return lModel;
+        public void UsuarioDelete(string userId){
+            FUsuarioDao.Eliminar(int.Parse(userId));
         }
 
         [HttpPost]
         [Route("AdminApi/Usuario")]
-        public BaseModel UsuarioPost([FromBody] Usuario AUsuario){            
-            var lResponse = new BaseModel();
-
-            try{
-                FUsuarioDao.Guardar(AUsuario);
-            }
-            catch (Exception ex){
-                lResponse.Error = ex.Message;
-            }
-
-            return lResponse;
+        public void UsuarioPost([FromBody] Usuario AUsuario){ 
+            FUsuarioDao.Guardar(AUsuario);            
         }
 
         [HttpPut]
         [Route("AdminApi/Usuario/{userId}")]
-        public BaseModel UsuarioPut([FromBody] Usuario AUsuario, string userId){            
-            var lResponse = new BaseModel();
-
+        public void UsuarioPut([FromBody] Usuario AUsuario, string userId){ 
             AUsuario.Id = Int32.Parse(userId);
-
-            try{
-                FUsuarioDao.Guardar(AUsuario);
-            }
-            catch (Exception ex){
-                lResponse.Error = ex.Message;
-            }
-
-            return lResponse;
+            FUsuarioDao.Guardar(AUsuario);
         }
     }
 }
