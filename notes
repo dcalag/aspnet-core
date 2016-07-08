@@ -1,1 +1,26 @@
 https://docs.asp.net/en/latest/security/authentication/cookie.html
+https://docs.asp.net/en/latest/publishing/linuxproduction.html
+
+nginx:
+#https://anthonysimmon.com/asp-net-5-nginx-reverse-proxy-linux/
+server {
+	listen 80;
+    #server_name aspnet.local;
+    
+	# Path to the wwwroot folder
+    root /home/daniel/source/dotnet/aspnet-core/wwwroot;
+    
+    # Static content
+    #location ~ \.(jpg|jpeg|gif|png|ico|css|zip|tgz|gz|rar|bz2|pdf|txt|tar|wav|bmp|rtf|js|flv|swf|html|htm|woff2|svg)$ {
+    #    expires 1d;
+    #    access_log off;
+    #    add_header X-Static-File true;
+    #}
+
+    
+	location / {
+		proxy_pass http://127.0.0.1:5000;
+		#proxy_set_header Connection "";
+        #proxy_http_version 1.1;
+	}
+}
